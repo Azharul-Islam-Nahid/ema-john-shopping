@@ -5,8 +5,8 @@ import Cart from '../Cart/Cart';
 import ReviewItem from '../ReviewItem/ReviewItem';
 
 const Orders = () => {
-    const { initialCart } = useLoaderData();
-    const [cart, setCart] = useState(initialCart);
+    const { initialCart } = useLoaderData();  // { products: products, initialCart: initialCart }
+    const [cart, setCart] = useState(initialCart)
 
     const handleRemoveItem = (id) => {
         const remaining = cart.filter(product => product.id !== id);
@@ -14,7 +14,7 @@ const Orders = () => {
         removeFromDb(id);
     }
 
-    const clearCart = () => {
+    const clearCart = () =>{
         setCart([]);
         deleteShoppingCart();
     }
@@ -27,14 +27,18 @@ const Orders = () => {
                         key={product.id}
                         product={product}
                         handleRemoveItem={handleRemoveItem}
-                    > </ReviewItem>)
+                    ></ReviewItem>)
                 }
                 {
-                    cart.length === 0 && <h2>No Items for Review, please <Link to='/'>Shop more</Link> </h2>
+                    cart.length === 0 && <h2>No Items for Review. Please <Link to="/">Shop more</Link></h2>
                 }
             </div>
             <div className='cart-container'>
-                <Cart clearCart={clearCart} cart={cart}></Cart>
+                <Cart clearCart={clearCart} cart={cart}>
+                    <Link to='/shipping'>
+                        <button>Proceed Shipping</button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );
